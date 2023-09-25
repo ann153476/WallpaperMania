@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Fuggles&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body {
+  position: relative;
+  font-family: "Fuggles", cursive;
+  background-color: #173640;
+  overflow-x: hidden;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid yellow;
+  padding: 0 5%;
+  height: 10vh;
+}
+.logo__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #06f591;
+  font-size: 30px;
+}
+@media (max-width: 768px) {
+  .logo__box {
+    font-size: 18px;
+  }
+}
+.logo__box > svg {
+  fill: #06f591;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.3em;
+}
+nav {
+  display: flex;
+}
+@media (max-width: 768px) {
+  nav {
+    display: none; /* Приховати навігацію на мобільних пристроях */
+  }
+}
+nav a {
+  display: flex;
+  align-items: center;
+  color: #d8d8d8;
+  margin: 0 0.4em;
+  height: 10vh;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+nav a:hover {
+  color: #06f591;
+}
+.header__BTN {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5em;
+  height: 1.5em;
+  --green: #1bfd9c;
+  font-size: 40px;
+  padding: 0;
+  position: relative;
+  font-family: inherit;
+  border-radius: 0.6em;
+  overflow: hidden;
+  transition: all 0.3s;
+  border: 3px solid var(--green);
+  background: linear-gradient(
+    to right,
+    rgba(27, 253, 156, 0.1) 1%,
+    transparent 40%,
+    transparent 60%,
+    rgba(27, 253, 156, 0.1) 100%
+  );
+  color: var(--green);
+  box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4),
+    0 0 9px 3px rgba(27, 253, 156, 0.1);
+}
+@media (max-width: 768px) {
+  .header__BTN {
+    font-size: 30px;
+  }
+}
+.header__BTN:hover {
+  color: #82ffc9;
+  box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.6),
+    0 0 9px 3px rgba(27, 253, 156, 0.2);
+}
+
+.header__BTN:before {
+  content: "";
+  position: absolute;
+  left: -4em;
+  width: 4em;
+  height: 100%;
+  top: 0;
+  transition: transform 0.4s ease-in-out;
+  background: linear-gradient(
+    to right,
+    transparent 1%,
+    rgba(27, 253, 156, 0.4) 40%,
+    rgba(27, 253, 156, 0.4) 60%,
+    transparent 100%
+  );
+}
+
+.header__BTN:hover:before {
+  transform: translateX(15em);
+}
+.header__BTN svg {
+  fill: #06f591;
+  width: 1em;
+  margin-right: 0.3em;
+}
+/*  */
+.nav__menu__btn {
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  height: 10vh;
+  max-block-size: 100%;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .nav__menu__btn {
+    display: none;
+  }
+}
+.nav__menu__btn svg {
+  width: inherit;
+  height: inherit;
+  fill: #d8d8d8;
+}
+.nav__menu__btn svg:hover {
+  fill: #06f591;
+}
+/* modal */
+#modal {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+  background-color: #d8d8d8;
+  padding: 10%;
+  /* display: none; */
+}
+.close__modal__btn {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  display: block;
+  margin-left: auto;
+}
+.close__modal__btn:hover {
+  transition: transform 0.1s ease;
+  transform: rotate(90deg);
+}
+.close__modal__btn > svg {
+  width: 50px;
+  height: 50px;
+}
