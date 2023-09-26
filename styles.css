@@ -281,6 +281,12 @@ nav a:hover {
   border-radius: 30px;
   object-fit: cover;
 }
+@media (max-width: 768px) {
+  .images__box img {
+    width: 22vw;
+    height: 45vw;
+  }
+}
 .images__box img:nth-child(3n-1) {
   transform: translateY(-30%);
 }
