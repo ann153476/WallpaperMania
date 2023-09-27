@@ -223,25 +223,80 @@ nav a:hover {
   color: #06f591;
 }
 .hero button {
-  color: #173640;
-  background-color: #06f591;
-  width: 200px;
-  height: 30px;
+  color: #06f591;
+  background-color: transparent;
+  width: 70%;
+  height: 100%;
   font-size: 15px;
+  font-weight: bolder;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20px;
+  border: 3px solid #06f591; /* Звичайна границя */
+  box-shadow: inset 0 0 10px #06f591; /* Розмиття границі кнопки */
+  transition: all 0.5s linear;
+}
+.hero button:hover {
+  background-color: #06f591;
+  color: #173640;
 }
 .arrow__svg {
   width: 30px;
   height: 30px;
   margin-right: 1em;
+  fill: #06f591;
+  transition: all 0.5s linear;
+}
+.hero button:hover .arrow__svg {
   fill: #173640;
 }
-/* .hero button:hover .arrow__svg {
+.know__more {
+  font-size: 20px;
+  color: #d8d8d8;
+  border-bottom: #d8d8d8;
+}
+
+.b_d_w {
+  display: flex;
+  align-items: center;
+}
+У
+  цьому
+  прикладі
+  ми
+  застосовуємо
+  box-shadow
+  на
+  псевдоелементі
+  ::before
+  з
+  inset
+  значенням,
+що робить розмиття тільки для границі кнопки. Границя залишається видимою,
+але
+  має
+  розмитий
+  вигляд.
+  При
+  необхідності
+  ви
+  можете
+  налаштувати
+  радіус
+  розмиття
+  і
+  колір
+  відповідно
+  до
+  ваших
+  потреб.
+  .arrow__svg {
+  width: 30px;
+  height: 30px;
+  margin-right: 1em;
   fill: #06f591;
-} */
+}
 .know__more {
   font-size: 20px;
   color: #d8d8d8;
