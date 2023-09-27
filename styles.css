@@ -198,6 +198,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 5vh;
 }
 @media (max-width: 768px) {
   .hero {
@@ -223,6 +224,8 @@ nav a:hover {
   color: #06f591;
 }
 .hero button {
+  font-family: "Fuggles", cursive;
+
   color: #06f591;
   background-color: transparent;
   width: 70%;
@@ -366,7 +369,7 @@ nav a:hover {
 .c_r {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
 }
 @media (max-width: 768px) {
