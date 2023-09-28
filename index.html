@@ -13,12 +13,27 @@
         <svg>
           <use href="./img/symbol-defs.svg#icon-logo"></use>
         </svg>
-        <p>Wallpaper Mania</p>
+        <!-- <p>Wallpaper Mania</p> -->
       </div>
       <nav>
-        <a href="#">Home</a><a href="#">PC Wallpapers</a
-        ><a href="#">Phone Wallpapers</a><a href="#">4K Wallpapers</a>
+        <a href="#">Home</a>
+        <a href="#">Phone Wallpapers</a>
+        <a href="#">4K Wallpapers</a>
       </nav>
+      <div class="input__container">
+        <input
+          type="text"
+          name="text"
+          class="input__search"
+          required=""
+          placeholder="Type to search..."
+        />
+        <div class="icon">
+          <svg>
+            <use href="./img/symbol-defs.svg#icon-search"></use>
+          </svg>
+        </div>
+      </div>
       <button class="header__BTN" type="button">
         <svg>
           <use
@@ -33,6 +48,7 @@
         </svg>
       </button>
     </header>
+    <div class="found__photo__box"></div>
     <div class="c_r">
       <div class="hero">
         <h1>Best 4k<span>Wallpapers!</span></h1>
@@ -52,26 +68,7 @@
         </div>
       </div>
       <div class="images__container">
-        <div class="images__box">
-          <img src="./img/y(1).png" />
-          <img src="./img/y(2).jpg" />
-          <img src="./img/y(3).jpg" />
-          <img src="./img/y(4).jpg" />
-          <img src="./img/y(5).jpg" />
-          <img src="./img/y(6).jpg" />
-          <img src="./img/y(7).jpg" />
-          <img src="./img/y(8).jpg" />
-          <img src="./img/y(9).jpg" />
-          <img src="./img/y(10).jpg" />
-          <img src="./img/y(11).jpg" />
-          <img src="./img/y(12).jpg" />
-          <img src="./img/y(13).jpg" />
-          <img src="./img/y(14).jpg" />
-          <img src="./img/y(15).jpg" />
-          <img src="./img/y(16).jpg" />
-          <img src="./img/y(17).jpg" />
-          <img src="./img/y(18).jpg" />
-        </div>
+        <div class="images__box"></div>
         <div class="overlay1"></div>
         <div class="overlay2"></div>
       </div>
@@ -85,6 +82,7 @@
       <a href="#">Home</a><a href="#">PC Wallpapers</a
       ><a href="#">Phone Wallpapers</a><a href="#">4K Wallpapers</a>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./index.js" type="module"></script>
   </body>
 </html>

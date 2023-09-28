@@ -90,6 +90,11 @@ nav a:hover {
   .header__BTN {
     font-size: 30px;
     width: 40vw;
+    background-color: #173640;
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    z-index: 999;
   }
 }
 .header__BTN:hover {
@@ -264,37 +269,7 @@ nav a:hover {
   display: flex;
   align-items: center;
 }
-У
-  цьому
-  прикладі
-  ми
-  застосовуємо
-  box-shadow
-  на
-  псевдоелементі
-  ::before
-  з
-  inset
-  значенням,
-що робить розмиття тільки для границі кнопки. Границя залишається видимою,
-але
-  має
-  розмитий
-  вигляд.
-  При
-  необхідності
-  ви
-  можете
-  налаштувати
-  радіус
-  розмиття
-  і
-  колір
-  відповідно
-  до
-  ваших
-  потреб.
-  .arrow__svg {
+.arrow__svg {
   width: 30px;
   height: 30px;
   margin-right: 1em;
@@ -376,4 +351,64 @@ nav a:hover {
   .c_r {
     flex-direction: column;
   }
+}
+/*  */
+.input__container {
+  position: relative;
+  --size-button: 40px;
+  color: white;
+}
+
+.input__search {
+  padding-left: var(--size-button);
+  height: var(--size-button);
+  font-size: 15px;
+  border: none;
+  color: #fff;
+  outline: none;
+  width: var(--size-button);
+  transition: all ease 0.3s;
+  background-color: #173640;
+  box-shadow: 1.5px 1.5px 3px #0e0e0e, -1.5px -1.5px 3px rgb(95 94 94 / 25%),
+    inset 0px 0px 0px #0e0e0e, inset 0px -0px 0px #5f5e5e;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.input__search:hover {
+  box-shadow: 1.5px 1.5px 3px #06f591, -1.5px -1.5px 3px rgb(95 94 94 / 25%),
+    inset 0px 0px 0px #06f591, inset 0px -0px 0px #5f5e5e;
+}
+.input__search:focus,
+.input__search:not(:invalid) {
+  left: 0;
+  width: 200px;
+  cursor: text;
+  box-shadow: 0px 0px 0px #0e0e0e, 0px 0px 0px rgb(95 94 94 / 25%),
+    inset 1.5px 1.5px 3px #0e0e0e, inset -1.5px -1.5px 3px #5f5e5e;
+}
+
+.input__search:focus + .icon,
+.input__search:not(:invalid) + .icon {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.input__container .icon {
+  position: absolute;
+  width: var(--size-button);
+  height: var(--size-button);
+  top: 0;
+  left: 0;
+  padding: 8px;
+  pointer-events: none;
+}
+
+.input__container .icon svg {
+  width: 100%;
+  height: 100%;
+  fill: #06f591;
+}
+/*  */
+.found__photo__box {
+  border: 1px solid red;
 }
