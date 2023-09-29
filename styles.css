@@ -410,5 +410,15 @@ nav a:hover {
 }
 /*  */
 .found__photo__box {
-  border: 1px solid red;
+  padding: 2.5vw;
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Завжди по 3 зображення в ряду */
+  gap: 2.5vw; /* Відступи між зображеннями */
+}
+
+.found__photo__box img {
+  width: 30vw; /* Фіксована ширина 20% від ширини вікна */
+  height: 30vw; /* Фіксована висота 20% від ширини вікна */
+  object-fit: cover;
 }

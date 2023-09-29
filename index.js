@@ -23,12 +23,11 @@ for (let i = 0; i < NumbPictHome; i++) {
 ///
 const imgHome = document.querySelectorAll(".img__home");
 const topic = "people";
-const query = "tea";
+
 axios
   .get(
     `https://api.unsplash.com/photos/random?client_id=${accessKey}&count=${count}`
     //`https://api.unsplash.com/topics/${topic}/photos?client_id=${accessKey}&per_page=${NumbPictHome}`
-    //`https://api.unsplash.com/search/collections?client_id=${accessKey}&per_page=${NumbPictHome}&query=${query}`
   )
   .then((response) => {
     const photosData = response.data;
@@ -57,7 +56,26 @@ const foundPhotoBox = document.querySelector(".found__photo__box");
 const countFound = 10; // Кількість фотографій
 function funcSearch(e) {
   console.log(e.target.value);
+  let query = e.target.value;
   foundPhotoBox.innerHTML = ``;
+  axios
+    .get(
+      `https://api.unsplash.com/search/collections?client_id=${accessKey}&per_page=${NumbPictHome}&query=${query}`
+    )
+    .then((response) => {
+      const photosData = response.data;
+      for (let i = 0; i < 9; i++) {
+        console.log(photosData.results[0].cover_photo.urls.regular);
+        foundPhotoBox.insertAdjacentHTML(
+          "afterbegin",
+          `<img src="${photosData.results[i].cover_photo.urls.regular}"/>`
+        );
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
   //const searchTerm = e.target.value;
 }
 
