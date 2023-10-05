@@ -320,7 +320,7 @@ nav a:hover {
     height: 45vw;
   }
 }
-.images__box img:nth-child(3n-1) {
+.images__box .img__box:nth-child(3n-1) {
   transform: translateY(-30%);
 }
 .images__container {
@@ -353,6 +353,12 @@ nav a:hover {
   }
 }
 /*  */
+.input__box {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .input__container {
   position: relative;
   --size-button: 40px;
@@ -421,4 +427,30 @@ nav a:hover {
   width: 30vw; /* Фіксована ширина 20% від ширини вікна */
   height: 30vw; /* Фіксована висота 20% від ширини вікна */
   object-fit: cover;
+}
+/* select */
+.img__box {
+  border: 1px solid red;
+  position: relative;
+}
+.img__box__svg {
+  border: 1px solid transparent;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  transition: all 0.5s linear;
+  opacity: 0;
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  stroke: transparent;
+  fill: transparent;
+}
+.img__box img {
+  pointer-events: none;
+}
+.select__img {
+  stroke: #06f591;
+  opacity: 1;
 }

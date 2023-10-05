@@ -6,6 +6,7 @@ const count = 18;
 const menuBTN = document.querySelector(".nav__menu__btn");
 const Xbtn = document.querySelector(".close__modal__btn");
 const modal = document.querySelector("#modal");
+///////////
 
 menuBTN.addEventListener("click", () => {
   modal.style.transform = "translateX(0%)";
@@ -17,10 +18,14 @@ Xbtn.addEventListener("click", () => {
 
 const imagesBox = document.querySelector(".images__box");
 for (let i = 0; i < NumbPictHome; i++) {
-  imagesBox.insertAdjacentHTML("afterbegin", '<img class="img__home" />');
+  imagesBox.insertAdjacentHTML(
+    "afterbegin",
+    '<div class="img__box"><svg class="img__box__svg"><use href="./img/symbol-defs.svg#icon-checkmark"></use></svg><img  class="img__home" /></div>'
+  );
 }
 
 ///
+const imgBox = document.querySelectorAll(".img__box");
 const imgHome = document.querySelectorAll(".img__home");
 const topic = "people";
 
@@ -35,6 +40,8 @@ axios
     for (let i = 0; i < imgHome.length; i++) {
       imgHome[i].src = photosData[i].urls.regular;
       imgHome[i].alt = photosData[i].alt_description;
+      //imgBox[i].id = photosData[i].id;
+      imgBox[i].id = i;
     }
     // for (let i = 0; i < imgHome.length; i++) {
     //   imgHome[i].src = photosData.results[i].cover_photo.urls.regular;
@@ -55,7 +62,6 @@ const myInput = document.querySelector(".input__search");
 const foundPhotoBox = document.querySelector(".found__photo__box");
 const countFound = 10; // Кількість фотографій
 function funcSearch(e) {
-  console.log(e.target.value);
   let query = e.target.value;
   foundPhotoBox.innerHTML = ``;
   axios
@@ -81,4 +87,25 @@ function funcSearch(e) {
 
 myInput.addEventListener("input", funcSearch);
 
-////////////////////
+/////////select///////////
+const imgBoxSvg = document.querySelectorAll(".img__box__svg");
+
+let saveSelectImgId = [];
+
+function funcSelect(e) {
+  //console.log(e.target.closest(".img__box").querySelector("img").src);
+  imgBoxSvg[e.target.id].classList.toggle("select__img");
+}
+console.log(saveSelectImgId);
+
+for (let i = 0; i < imgBox.length; i++) {
+  imgBox[i].addEventListener("click", funcSelect);
+}
+///////////download////////////
+const uploadBTN = document.querySelector(".header__BTN");
+
+function funUpload(e) {
+  console.log(e);
+}
+
+uploadBTN.addEventListener("click", funUpload);
