@@ -3,17 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Завантажити зображення</title>
+    <title>Завантажити зображення з Pexels</title>
   </head>
   <body>
     <a href="./index.html">go back</a>
-    <h1>Завантажити зображення</h1>
-    <a
-      href="https://unsplash.com/photos/qtmtakXm4Bs/download?ixid=M3w1MDgyMTl8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTY0OTg3MTZ8"
-      download
-      >Завантажитиммм зображення</a
-    >
+    <h1>Завантажити зображення з Pexels</h1>
+    <div>
+      <img width="100" id="imageToSave" src="./img/y(10).jpg" />
+      <button id="saveButton">Зберегти зображення</button>
+    </div>
 
-    <!-- <script src="./test.js"></script> -->
+    <script>
+      const saveButton = document.getElementById("saveButton");
+      const imageToSave = document.getElementById("imageToSave");
+
+      saveButton.addEventListener("click", function () {
+        const imageSrc = imageToSave.src;
+        const fileName = "downloaded_image.jpg";
+
+        // Створюємо посилання для завантаження
+        const link = document.createElement("a");
+        link.href = imageSrc;
+        link.download = fileName;
+
+        // Симулюємо подію кліку на посилання
+        const clickEvent = new MouseEvent("click", {
+          view: window,
+          bubbles: true,
+          cancelable: false,
+        });
+
+        link.dispatchEvent(clickEvent);
+      });
+    </script>
   </body>
 </html>
