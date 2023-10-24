@@ -60,7 +60,7 @@ nav a {
 nav a:hover {
   color: #06f591;
 }
-.header__BTN {
+.upload__BTN {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +87,7 @@ nav a:hover {
     0 0 9px 3px rgba(27, 253, 156, 0.1);
 }
 @media (max-width: 768px) {
-  .header__BTN {
+  .upload__BTN {
     font-size: 30px;
     width: 40vw;
     background-color: #173640;
@@ -97,12 +97,12 @@ nav a:hover {
     z-index: 999;
   }
 }
-.header__BTN:hover {
+.upload__BTN:hover {
   color: #82ffc9;
   box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.6),
     0 0 9px 3px rgba(27, 253, 156, 0.2);
 }
-.header__BTN:before {
+.upload__BTN:before {
   content: "";
   position: absolute;
   left: -4em;
@@ -118,10 +118,10 @@ nav a:hover {
     transparent 100%
   );
 }
-.header__BTN:hover:before {
+.upload__BTN:hover:before {
   transform: translateX(15em);
 }
-.header__BTN svg {
+.upload__BTN svg {
   fill: #06f591;
   width: 1em;
   margin-right: 0.3em;
