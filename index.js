@@ -37,8 +37,18 @@ axios
   .then((response) => {
     const photosData = response.data;
     for (let i = 0; i < imgHome.length; i++) {
+      imgHome[i].style.boxShadow = `0 0 10px 5px  ${photosData[i].color}`;
+      imgHome[i].id = photosData[i].id;
       imgHome[i].src = photosData[i].urls.regular;
       imgHome[i].alt = photosData[i].alt_description;
+      imgHome[i].setAttribute(
+        "data-url",
+        photosData[i].links.download + "&force=true"
+      );
+      ////////////////////////////////////////////
+      ///////////////////////////////////////////
+      ///////////////////&force=true////////////////////////
+      /////////////////////////////////////////////
       //imgBox[i].id = photosData[i].id;
       imgBox[i].id = i;
     }
@@ -70,7 +80,6 @@ function funcSearch(e) {
     .then((response) => {
       const photosData = response.data;
       for (let i = 0; i < 9; i++) {
-        console.log(photosData.results[1], "eeee");
         foundPhotoBox.insertAdjacentHTML(
           "afterbegin",
           `<img src="${photosData.results[i].cover_photo.urls.regular}"/>`
@@ -87,9 +96,10 @@ function funcSearch(e) {
 myInput.addEventListener("input", funcSearch);
 
 /////////select///////////
-function sendImageSrcToBackend(url) {
+function sendimageUrlToBackend(url, id) {
   const dataToSend = {
     url: url,
+    findid: id,
   };
 
   fetch("https://6537843dbb226bb85dd35975.mockapi.io/images", {
@@ -117,22 +127,20 @@ const imgBoxSvg = document.querySelectorAll(".img__box__svg");
 let saveSelectImg = [];
 
 function funcSelect(e) {
-  const imageSrc = e.target.closest(".img__box").querySelector("img").src;
-
-  const index = saveSelectImg.indexOf(imageSrc);
+  const imageUrl = e.target.closest(".img__box").querySelector("img")
+    .dataset.url;
+  const imageId = e.target.closest(".img__box").querySelector("img").id;
+  const index = saveSelectImg.indexOf(imageUrl);
 
   if (index !== -1) {
-    //deleteImageSrcToBackend(imageSrc); //видалення картинки з бекєнду
-    // Якщо посилання знайдено в масиві, видаляємо його
     saveSelectImg.splice(index, 1);
     imgBoxSvg[e.target.id].classList.remove("select__img");
   } else {
-    sendImageSrcToBackend(imageSrc); //відправлення картинки на бекенд
+    sendimageUrlToBackend(imageUrl, imageId); //відправлення картинки на бекенд
     // Якщо посилання не знайдено в масиві, додаємо його
-    saveSelectImg.push(imageSrc);
+    saveSelectImg.push(imageUrl);
     imgBoxSvg[e.target.id].classList.add("select__img");
   }
-
   console.log(saveSelectImg);
 }
 
@@ -140,88 +148,51 @@ for (let i = 0; i < imgBox.length; i++) {
   imgBox[i].addEventListener("click", funcSelect);
 }
 ///////////download////////////
+const uploadBTN = document.querySelector(".upload__BTN");
+uploadBTN.addEventListener("click", () => {
+  console.log(saveSelectImg, "//////////////////////////");
+
+  for (let i = 0; i < saveSelectImg.length; i++) {
+    let link = document.createElement("a");
+    link.href = saveSelectImg[i];
+    link.target = "_blank"; // Відкрити посилання в новій вкладці
+    //link.download = "img_" + (i + 1); // Ім'я файлу для завантаження
+    link.click(); // Симулювати клік на посиланні для скачування
+  }
+  // // Отримуємо список посилань з сервера
+  // fetch("https://6537843dbb226bb85dd35975.mockapi.io/images")
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       return response.json();
+  //     } else {
+  //       throw new Error("Помилка при виконанні запиту на сервер");
+  //     }
+  //   })
+  //   .then((data) => {
+  //     // Виводимо всі посилання в консоль
+  //     data.forEach((item) => {
+  //       console.log(item.url);
+  //     });
+  //     //качаю
+
+  //     // Очищаємо бекенд (видаляємо всі файли на сервері)
+  //     data.forEach((item) => {
+  //       fetch(`https://6537843dbb226bb85dd35975.mockapi.io/images/${item.id}`, {
+  //         method: "DELETE",
+  //       })
+  //         .then((response) => {
+  //           if (!response.ok) {
+  //             console.error("Помилка при видаленні файлу на сервері");
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           console.error("Помилка при видаленні файлу на сервері:", error);
+  //         });
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.error("Помилка при виконанні запиту на сервер:", error);
+  //   });
+});
 
 //////////////////
-document.addEventListener("DOMContentLoaded", () => {
-  const uploadBTN = document.querySelector(".upload__BTN");
-  uploadBTN.addEventListener("click", () => {
-    fetch("https://6537843dbb226bb85dd35975.mockapi.io/images")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Помилка під час отримання зображень з бекенду.");
-        }
-      })
-      .then((data) => {
-        data.forEach((imageData, index) => {
-          // Отримайте URL зображення з об'єкта даних
-          const imageUrl = imageData.url;
-
-          // Виконайте запит, щоб завантажити зображення
-          fetch(imageUrl)
-            .then((imageResponse) => imageResponse.blob())
-            .then((imageBlob) => {
-              // Створіть об'єкт URL для зображення
-              const imageURL = URL.createObjectURL(imageBlob);
-
-              // Створіть посилання для завантаження зображення
-              const a = document.createElement("a");
-              a.href = imageURL;
-              a.download = `image${index + 1}.jpg`; // Встановіть ім'я файлу за потребою
-              a.textContent = `Завантажити зображення ${index + 1}`;
-              document.body.appendChild(a);
-              console.log(imageURL, "hhhhhhhhhh");
-            })
-            .catch((error) => {
-              console.error("Помилка під час завантаження зображення:", error);
-            });
-        });
-      })
-      .catch((error) => {
-        console.error("Помилка під час отримання списку зображень:", error);
-      });
-  });
-});
-/////////////////////////////////////////////////////////////////////////////////////////
-
-// // Вибираємо кнопку за її класом
-// const uploadButton = document.querySelector(".header__BTN");
-
-// // Створюємо пустий список для збереження обраних картинок
-// const selectedImages = [];
-
-// // Додаємо обробник події на клік по кнопці
-// uploadButton.addEventListener("click", () => {
-//   // Тут ви можете додати код для додавання обраної картинки до списку
-//   // Наприклад, можливо, ви маєте посилання на обрану картинку, яке ви хочете додати до списку
-//   const selectedImageURL = "шлях_до_обраної_картинки.jpg";
-
-//   // Додаємо посилання на обрану картинку до списку
-//   selectedImages.push(selectedImageURL);
-
-//   // Ви можете також оновити інтерфейс для відображення обраних картинок
-//   // Наприклад, створити мініатюри або список обраних картинок на вашому сайті
-
-//   // При необхідності оновіть вміст сторінки з обраними картинками
-//   // Наприклад, вставте посилання на картинки в DOM елемент
-//   updateSelectedImagesUI();
-// });
-
-// // Функція для оновлення інтерфейсу з обраними картинками
-// function updateSelectedImagesUI() {
-//   // Отримайте DOM-елемент, де ви хочете відображати обрані картинки
-//   const selectedImagesContainer = document.querySelector(
-//     ".selected-images-container"
-//   );
-
-//   // Очистіть контейнер перед оновленням
-//   selectedImagesContainer.innerHTML = "";
-
-//   // Пройдіться по списку обраних картинок і відобразіть їх у контейнері
-//   selectedImages.forEach((imageURL) => {
-//     const imageElement = document.createElement("img");
-//     imageElement.src = imageURL;
-//     selectedImagesContainer.appendChild(imageElement);
-//   });
-// }

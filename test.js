@@ -1,29 +1,23 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const downloadButton = document.getElementById("downloadButton");
+// Отримуємо посилання на зображення та кнопку
+const image = document.getElementById("download-image");
+const downloadButton = document.getElementById("download-button");
 
-  // URL зображення, яке ви хочете дозволити користувачу завантажити
-  const imageUrl =
-    "https://w.forfun.com/fetch/a9/a9b77c9d17fcd84d2a29e91fa6130c56.jpeg?h=900&r=0.5";
+// Встановлюємо URL для завантаження
+const imageUrl =
+  "https://images.unsplash.com/photo-1696142990758-581061f2801d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDgyMTl8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTgyMjk2NDV8&ixlib=rb-4.0.3&q=80&w=1080";
 
-  // Додавання обробників подій
-  downloadButton.addEventListener("click", function () {
-    downloadImage(imageUrl);
-  });
+// Додаємо обробник події для кнопки "Завантажити"
+downloadButton.addEventListener("click", function () {
+  // Створюємо посилання для завантаження зображення
+  const link = document.createElement("a");
+  link.href = imageUrl;
+  link.download = "зображення.jpg"; // Назва для завантаженого файлу
+  link.style.display = "none"; // Приховуємо посилання
 
-  // Функція для завантаження зображення
-  function downloadImage(url) {
-    // Створюємо посилання для завантаження
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "image.jpg"; // Ім'я файлу для завантаження
+  // Додаємо посилання на сторінку та симулюємо клік
+  document.body.appendChild(link);
+  link.click();
 
-    // Симулюємо подію кліку на посилання
-    const clickEvent = new MouseEvent("click", {
-      view: window,
-      bubbles: true,
-      cancelable: false,
-    });
-
-    link.dispatchEvent(clickEvent);
-  }
+  // Видаляємо посилання
+  document.body.removeChild(link);
 });
