@@ -151,13 +151,15 @@ for (let i = 0; i < imgBox.length; i++) {
 const uploadBTN = document.querySelector(".upload__BTN");
 uploadBTN.addEventListener("click", () => {
   console.log(saveSelectImg, "//////////////////////////");
-
   for (let i = 0; i < saveSelectImg.length; i++) {
     let link = document.createElement("a");
     link.href = saveSelectImg[i];
     link.target = "_blank"; // Відкрити посилання в новій вкладці
-    //link.download = "img_" + (i + 1); // Ім'я файлу для завантаження
+    link.download = "img_" + (i + 1) + ".jpg"; // Ім'я файлу для завантаження
+    link.style.display = "none"; // Приховати посилання
+    document.body.appendChild(link);
     link.click(); // Симулювати клік на посиланні для скачування
+    document.body.removeChild(link); // Видалити посилання після скачування
   }
   // // Отримуємо список посилань з сервера
   // fetch("https://6537843dbb226bb85dd35975.mockapi.io/images")
