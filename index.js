@@ -32,7 +32,6 @@ const topic = "people";
 axios
   .get(
     `https://api.unsplash.com/photos/random?client_id=${accessKey}&count=${count}`
-    //`https://api.unsplash.com/topics/${topic}/photos?client_id=${accessKey}&per_page=${NumbPictHome}`
   )
   .then((response) => {
     const photosData = response.data;
@@ -52,14 +51,6 @@ axios
       //imgBox[i].id = photosData[i].id;
       imgBox[i].id = i;
     }
-    // for (let i = 0; i < imgHome.length; i++) {
-    //   imgHome[i].src = photosData.results[i].cover_photo.urls.regular;
-    //   imgHome[i].alt = photosData.results[i].cover_photo.alt_description;
-    // }
-    // for (let i = 0; i < imgHome.length; i++) {
-    //   imgHome[i].src = photosData[i].urls.small;
-    //   //imgHome[i].alt = photosData[i].alt_description;
-    // }
   })
   .catch((error) => {
     console.error(error);
