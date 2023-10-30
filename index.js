@@ -60,29 +60,80 @@ axios
 ////////search////////////
 const myInput = document.querySelector(".input__search");
 const foundPhotoBox = document.querySelector(".found__photo__box");
-const countFound = 10; // Кількість фотографій
+const paginationBtnBox = document.querySelector(".pagination__btn__box");
+const countPerPage = 9; // Кількість фотографій на сторінці
+let currentPage = 1; // Поточна сторінка
+let totalPhotos = 0; // Загальна кількість фотографій
+
 function funcSearch(e) {
   let query = e.target.value;
-  foundPhotoBox.innerHTML = ``;
+  if (query) {
+    paginationBtnBox.innerHTML = ""; // Очистити кнопки пагінації
+    loadPage(1, query); // Завантажити першу сторінку
+  } else {
+    paginationBtnBox.innerHTML = "";
+  }
+}
+
+// Завантажити сторінку за вказаним номером
+function loadPage(page, query) {
+  // Очистити вміст контейнера з фотографіями
+  foundPhotoBox.innerHTML = "";
+
+  // Зробити запит до API Unsplash з використанням пагінації
   axios
     .get(
-      `https://api.unsplash.com/search/collections?client_id=${accessKey}&per_page=${NumbPictHome}&query=${query}`
+      `https://api.unsplash.com/search/collections?client_id=${accessKey}&per_page=${countPerPage}&page=${page}&query=${query}`
     )
     .then((response) => {
       const photosData = response.data;
-      for (let i = 0; i < 9; i++) {
+      totalPhotos = photosData.total; // Отримати загальну кількість фотографій
+
+      for (let i = 0; i < photosData.results.length; i++) {
         foundPhotoBox.insertAdjacentHTML(
-          "afterbegin",
+          "beforeend",
           `<img src="${photosData.results[i].cover_photo.urls.regular}"/>`
         );
       }
+
+      // Оновити кнопки пагінації
+      updatePaginationButtons();
     })
     .catch((error) => {
       console.error(error);
     });
-
-  //const searchTerm = e.target.value;
 }
+
+// Оновити кнопки пагінації
+function updatePaginationButtons() {
+  paginationBtnBox.innerHTML = ""; // Очистити кнопки пагінації
+
+  // Додати кнопку "Previous Page", якщо поточна сторінка більше 1
+  if (currentPage > 1) {
+    paginationBtnBox.innerHTML +=
+      '<button class="prev__page__btn">Previous Page</button>';
+  }
+
+  // Додати кнопку "Next Page", якщо є ще фотографії для завантаження
+  if (totalPhotos > currentPage * countPerPage) {
+    paginationBtnBox.innerHTML +=
+      '<button class="next__page__btn">Next Page</button>';
+  }
+}
+
+// Обробник кнопки "Next Page"
+paginationBtnBox.addEventListener("click", (e) => {
+  if (e.target.classList.contains("next__page__btn")) {
+    currentPage++; // Збільшити номер сторінки
+    loadPage(currentPage, myInput.value);
+  } else if (
+    e.target.classList.contains("prev__page__btn") &&
+    currentPage > 1
+  ) {
+    currentPage--; // Зменшити номер сторінки
+    loadPage(currentPage, myInput.value);
+  }
+});
 
 myInput.addEventListener("input", funcSearch);
 

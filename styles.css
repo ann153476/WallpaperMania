@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Fuggles&display=swap");
+body,
+button {
+  font-family: "Fuggles", cursive;
+}
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +15,6 @@ a {
 
 body {
   position: relative;
-  font-family: "Fuggles", cursive;
   background-color: #173640;
 }
 header {
@@ -453,4 +456,23 @@ nav a:hover {
 .select__img {
   stroke: #06f591;
   opacity: 1;
+}
+.load__more__btn {
+  border: 3px solid #06f591;
+  color: #06f591;
+  width: 60vw;
+  margin: 1em auto;
+  display: block;
+  font-size: 2em;
+  background-color: transparent;
+}
+.prev__page__btn,
+.next__page__btn {
+  width: 40vw;
+  background-color: transparent;
+  border: 3px solid #06f591;
+  color: #06f591;
+  margin: 0 4vw 2em;
+  box-sizing: content-box;
+  font-size: 2.5em;
 }
