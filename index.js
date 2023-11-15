@@ -20,7 +20,7 @@ const imagesBox = document.querySelector(".images__box");
 for (let i = 0; i < NumbPictHome; i++) {
   imagesBox.insertAdjacentHTML(
     "afterbegin",
-    '<div class="img__box"><svg class="img__box__svg"><use href="./img/symbol-defs.svg#icon-checkmark"></use></svg><img  class="img__home" /></div>'
+    '<div class="img__box forsave"><svg class="img__box__svg"><use href="./img/symbol-defs.svg#icon-checkmark"></use></svg><img  class="img__home" /></div>'
   );
 }
 
@@ -36,7 +36,7 @@ axios
   .then((response) => {
     const photosData = response.data;
     for (let i = 0; i < imgHome.length; i++) {
-      imgHome[i].style.boxShadow = `0 0 10px 5px  ${photosData[i].color}`;
+      imgHome[i].style.boxShadow = `0 0 2em 1em  ${photosData[i].color}`;
       imgHome[i].id = photosData[i].id;
       imgHome[i].src = photosData[i].urls.regular;
       imgHome[i].alt = photosData[i].alt_description;
@@ -44,6 +44,7 @@ axios
         "data-url",
         photosData[i].links.download + "&force=true"
       );
+      //console.log(photosData[i].links.download + "&force=true");
       ////////////////////////////////////////////
       ///////////////////////////////////////////
       ///////////////////&force=true////////////////////////
@@ -79,7 +80,8 @@ function funcSearch(e) {
 function loadPage(page, query) {
   // Очистити вміст контейнера з фотографіями
   foundPhotoBox.innerHTML = "";
-
+  //https://unsplash.com/photos/PAGBeJrLiDA/download?ixid=M3w1MDgyMTl8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDAwNTQyMTF8&force=true
+  //https://unsplash.com/photos/uHHjVwJs9as/download?ixid=M3w1MDgyMTl8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDAwNTQyMTF8&force=true
   // Зробити запит до API Unsplash з використанням пагінації
   axios
     .get(
@@ -92,16 +94,35 @@ function loadPage(page, query) {
       for (let i = 0; i < photosData.results.length; i++) {
         foundPhotoBox.insertAdjacentHTML(
           "beforeend",
-          `<img src="${photosData.results[i].cover_photo.urls.regular}"/>`
+          `<div style="border: 0.3vw solid ${
+            photosData.results[i].cover_photo.color
+          }" class="search__img__box forsave"><svg class="img__box__svg"><use href="./img/symbol-defs.svg#icon-checkmark"></use></svg><img id="${
+            photosData.results[i].id
+          }" class="forsave" data-url="${
+            photosData.results[i].cover_photo.links.download +
+            "?ixid=M3w1MDgyMTl8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDAwNTQyMTF8&force=true"
+          }" src="${photosData.results[i].cover_photo.urls.regular}"/></div>`
         );
       }
-
       // Оновити кнопки пагінації
       updatePaginationButtons();
+      // Додати слухачів на кожен елемент .search__img__box
+      const searchImgBox = document.querySelectorAll(".search__img__box");
+      const searchImgBoxSVG = document.querySelectorAll(".img__box__svg");
+
+      searchImgBox.forEach((box, index) => {
+        box.addEventListener("click", (e) => {
+          saveSelectImg.push(e.target.dataset.url);
+          console.log(e.target.dataset.url, "hvhvhjvjyv");
+          searchImgBoxSVG[index].classList.toggle("select__img");
+        });
+      });
     })
     .catch((error) => {
       console.error(error);
     });
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////
 }
 
 // Оновити кнопки пагінації
@@ -143,7 +164,6 @@ function sendimageUrlToBackend(url, id) {
     url: url,
     findid: id,
   };
-
   fetch("https://6537843dbb226bb85dd35975.mockapi.io/images", {
     method: "POST",
     headers: {
@@ -169,30 +189,29 @@ const imgBoxSvg = document.querySelectorAll(".img__box__svg");
 let saveSelectImg = [];
 
 function funcSelect(e) {
-  const imageUrl = e.target.closest(".img__box").querySelector("img")
+  const imageUrl = e.target.closest(".forsave").querySelector("img")
     .dataset.url;
-  const imageId = e.target.closest(".img__box").querySelector("img").id;
+  //const imageId = e.target.closest(".forsave").querySelector("img").id;
   const index = saveSelectImg.indexOf(imageUrl);
 
   if (index !== -1) {
     saveSelectImg.splice(index, 1);
     imgBoxSvg[e.target.id].classList.remove("select__img");
   } else {
-    sendimageUrlToBackend(imageUrl, imageId); //відправлення картинки на бекенд
+    //sendimageUrlToBackend(imageUrl, imageId); //відправлення картинки на бекенд
     // Якщо посилання не знайдено в масиві, додаємо його
     saveSelectImg.push(imageUrl);
     imgBoxSvg[e.target.id].classList.add("select__img");
   }
-  console.log(saveSelectImg);
 }
 
 for (let i = 0; i < imgBox.length; i++) {
   imgBox[i].addEventListener("click", funcSelect);
 }
+
 ///////////download////////////
 const uploadBTN = document.querySelector(".upload__BTN");
 uploadBTN.addEventListener("click", () => {
-  console.log(saveSelectImg, "//////////////////////////");
   for (let i = 0; i < saveSelectImg.length; i++) {
     let link = document.createElement("a");
     link.href = saveSelectImg[i];
@@ -203,40 +222,7 @@ uploadBTN.addEventListener("click", () => {
     link.click(); // Симулювати клік на посиланні для скачування
     document.body.removeChild(link); // Видалити посилання після скачування
   }
-  // // Отримуємо список посилань з сервера
-  // fetch("https://6537843dbb226bb85dd35975.mockapi.io/images")
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       return response.json();
-  //     } else {
-  //       throw new Error("Помилка при виконанні запиту на сервер");
-  //     }
-  //   })
-  //   .then((data) => {
-  //     // Виводимо всі посилання в консоль
-  //     data.forEach((item) => {
-  //       console.log(item.url);
-  //     });
-  //     //качаю
-
-  //     // Очищаємо бекенд (видаляємо всі файли на сервері)
-  //     data.forEach((item) => {
-  //       fetch(`https://6537843dbb226bb85dd35975.mockapi.io/images/${item.id}`, {
-  //         method: "DELETE",
-  //       })
-  //         .then((response) => {
-  //           if (!response.ok) {
-  //             console.error("Помилка при видаленні файлу на сервері");
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error("Помилка при видаленні файлу на сервері:", error);
-  //         });
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.error("Помилка при виконанні запиту на сервер:", error);
-  //   });
+  saveSelectImg = [];
+  console.log(saveSelectImg, "<<<<saveSelectImg");
 });
-
-//////////////////
+////////////////select ang save img search ///////////////////////

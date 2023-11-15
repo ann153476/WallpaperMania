@@ -420,11 +420,12 @@ nav a:hover {
 }
 /*  */
 .found__photo__box {
-  padding: 2.5vw;
+  box-sizing: content-box;
+  padding: 2vw;
   width: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Завжди по 3 зображення в ряду */
-  gap: 2.5vw; /* Відступи між зображеннями */
+  gap: 2vw; /* Відступи між зображеннями */
 }
 
 .found__photo__box img {
@@ -442,7 +443,7 @@ nav a:hover {
 
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: 9;
   transition: all 0.5s linear;
   opacity: 0;
   backdrop-filter: blur(5px);
@@ -475,4 +476,11 @@ nav a:hover {
   margin: 0 4vw 2em;
   box-sizing: content-box;
   font-size: 2.5em;
+}
+.search__img__box {
+  position: relative;
+  display: flex;
+}
+.search__img__box img {
+  object-fit: contain;
 }
